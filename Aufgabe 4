@@ -1,0 +1,56 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+omega = 1 #Variable
+v_0 = 1 #Startzustand von (-a)*x_0
+h = np.array([0.05, 0.025, 0.001])
+
+#v_0 = x'(0) = (siehe talk2) (-a)*x_0 = 1 und  omega^2 = 1^2 = 1 = a => x_0 = 1
+
+t = 0 #Zeitschritt 0
+a = 1 #Variable
+x_0 = 1 #Startzustand für Euler
+h_1 = t + h[0] #nächster Zeitpunkt
+
+def euler(a, h, x_0):
+    '''
+    Euler-Integration mit:
+    a                     Variable
+    h                     Schrittweite
+    x_0                   alter Zustand des Systems zum Zeitpunkt t
+    '''
+    result = x_0 + h*(-a)*x_0
+    return result
+
+
+def heun(x_0, euler):
+    '''
+    Heunverfahren mit:
+    x_0                    alter Zustand des Systems zum Zeitpunkt t
+    euler                  Euler-Integration
+    x_0 + euler(a, h, x_0) geschätzter nächster Schritt
+    '''
+    result = x_0 + h*0.5*(euler(a, h, x_0) + x_0 + euler(a, h, x_0) + h_1*(-a)*(x_0 + euler(a, h, x_0)))
+    return result
+
+
+for i in range(3):
+    while t < 20*np.pi:
+        x_0 = euler(a, h[i], x_0)
+        t = t + h[i]
+        #print(x_0)
+        plt.plot(t, x_0, 'r.')
+        plt.xlabel('$t$')
+        plt.ylabel('$euler(a, h, x_0)$')
+        plt.show()
+
+while t < 20*np.pi:
+    euler = euler(a, h, x_0)
+    x_0 = heun(x_0, euler)
+    t = t + h[0]
+    h_1 = h_1 + h[0]
+    #print(x_0)
+    plt.plot(t, x_0, 'r.')
+    plt.xlabel('$t$')
+    plt.ylabel('$heun(x_0, euler)$')
+    plt.show()
