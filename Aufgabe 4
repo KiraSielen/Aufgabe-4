@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 omega = 1 #Variable
-v_0 = 1 #Startzustand von (-a)*x_0
-h = np.array([0.05, 0.025, 0.001])
+h = np.array([0.05, 0.025, 0.001]) #Schrittweite
 
-#v_0 = x'(0) = (siehe talk2) (-a)*x_0 = 1 und  omega^2 = 1^2 = 1 = a => x_0 = 1
+#v_0 = 1 #Startzustand von (-a)*x_0
+#v_0 = x'(0) = (siehe talk2) (-a)*x_0 = 1 und omega^2 = 1^2 = 1 = a => x_0 = 1
 
 t = 0 #Zeitschritt 0
 a = 1 #Variable
@@ -40,9 +40,9 @@ for i in range(3):
         t = t + h[i]
         #print(x_0)
         plt.plot(t, x_0, 'r.')
-        plt.xlabel('$t$')
-        plt.ylabel('$euler(a, h, x_0)$')
-        plt.show()
+    plt.xlabel('$t$')
+    plt.ylabel('$euler(a, h, x_0)$')
+    plt.show()
 
 while t < 20*np.pi:
     euler = euler(a, h, x_0)
@@ -50,7 +50,7 @@ while t < 20*np.pi:
     t = t + h[0]
     h_1 = h_1 + h[0]
     #print(x_0)
-    plt.plot(t, x_0, 'r.')
-    plt.xlabel('$t$')
-    plt.ylabel('$heun(x_0, euler)$')
-    plt.show()
+    plt.plot(t, x_0, 'ro')
+plt.xlabel('$t$')
+plt.ylabel('$heun(x_0, euler)$')
+plt.show()
